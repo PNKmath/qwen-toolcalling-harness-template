@@ -62,14 +62,6 @@ _FALLBACK_PAYLOAD = (
 
 
 def run_fallback_normalizer_case() -> dict:
-    """Inline fallback-path verification (no live server required).
-
-    Constructs a mock message whose tool_calls attribute is None/empty and
-    whose content contains a raw <tool_call> block, then asserts that
-    normalize_tool_calls_from_message() returns source="fallback" and
-    correctly parses the function name and arguments.
-    """
-
     class _MockMessage:
         tool_calls = None
         content = _FALLBACK_PAYLOAD

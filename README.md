@@ -42,9 +42,11 @@ python scripts/chat_once.py "서울 날씨를 도구로 조회해줘"
 python scripts/regression.py
 ```
 
-유닛 테스트:
+유닛 테스트 (서버 불필요 — tool exec + normalizer 32케이스 포함):
 ```bash
 pytest -q
+# normalizer만 선택 실행:
+pytest -q tests/test_toolcall_normalizer.py
 ```
 
 Qwen3.6 전용 툴콜링 벤치(직접 HTTP 호출):
@@ -66,6 +68,19 @@ python scripts/tool_harness_qwen36.py \
 
 3. max_turns/timeout 강제
 - 무한 루프 방지
+
+## Tool Call 정규화 정책 (`harness/toolcall_normalizer.py`)
+
+하네스는 서버 설정에 관계없이 tool call을 안정적으로 처리하기 위해 `normalize_tool_calls_from_message()` 함수를 사용합니다.
+
+**"표준 tool_calls 우선, content fallback" 정책**:
+1. **standard** — 응답 메시지에 `tool_calls` 필드가 있으면 그것을 우선 사용합니다. `--tool-call-parser qwen3_coder`가 활성화된 서버(포트 8006/8008/8016/8018/8020)에서 항상 이 경로를 사용합니다.
+2. **fallback** — `tool_calls`가 없고 content에 `<tool_call><function=...>` 태그가 포함된 경우 XML 파싱으로 추출합니다. parser 플래그 없이 실행된 서버나 직접 텍스트 생성 모드에서 발생합니다.
+3. **none** — tool call이 없는 일반 텍스트 응답입니다.
+
+반환 값의 `source` 필드(`"standard"` | `"fallback"` | `"none"`)로 어느 경로를 거쳤는지 확인할 수 있습니다.
+
+**단위 테스트**: `tests/test_toolcall_normalizer.py` (32개 케이스) — 라이브 서버 없이 두 경로를 모두 검증합니다. `pytest -q`로 실행하세요.
 
 ## 지난 Qwen27 테스트 자산(추가 포함)
 

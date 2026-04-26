@@ -57,9 +57,13 @@ def run_case(base_url: str, model: str, case: dict, preserve_thinking: bool = Fa
         return rec
 
     msg = parsed.get("choices", [{}])[0].get("message", {})
+    # tool_calls here are server-parsed objects (source: standard, server-parsed by
+    # --tool-call-parser qwen3_coder).  This script bypasses harness/toolcall_normalizer.py
+    # and tests raw server-level parsing behaviour independent of the SDK wrapper.
     tool_calls = msg.get("tool_calls") or []
     names = [tc.get("function", {}).get("name") for tc in tool_calls]
     rec["tool_calls"] = names
+    rec["tool_call_source"] = "standard (server-parsed)" if tool_calls else "none"
 
     expected = case.get("expect_tool")
     if expected is None:
