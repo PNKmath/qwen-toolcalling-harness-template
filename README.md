@@ -46,6 +46,14 @@ python scripts/regression.py
 pytest -q
 ```
 
+Qwen3.6 전용 툴콜링 벤치(직접 HTTP 호출):
+```bash
+python scripts/tool_harness_qwen36.py \
+  --base-url http://127.0.0.1:8008/v1 \
+  --model Qwen3.6-27B-UD-MLX-4bit \
+  --out reports/tool_harness_qwen36.json
+```
+
 ## 하네스 설계 핵심
 
 1. 모델 서버와 하네스 책임 분리
