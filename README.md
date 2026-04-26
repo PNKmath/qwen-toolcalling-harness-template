@@ -66,6 +66,23 @@ python scripts/tool_harness_qwen36.py \
 3. max_turns/timeout 강제
 - 무한 루프 방지
 
+## 지난 Qwen27 테스트 자산(추가 포함)
+
+- 실행 스크립트
+  - `scripts/context_probe_qwen27.py`
+  - `scripts/start_qwen27_4bit_harness.sh`
+  - `scripts/start_qwen27_6bit_harness.sh`
+  - `scripts/start_qwen27_8bit_harness.sh`
+- 사용 가이드
+  - `docs/hermes_qwen27_harness_usage.txt`
+- 샘플 리포트
+  - `reports/samples/qwen27-harness-compare.json`
+  - `reports/samples/qwen27-4_6_8bit-coding-context-summary.json`
+  - `reports/samples/qwen27-4_6_8bit-interim-summary-2026-04-25.json`
+
+주의:
+- `start_qwen27_*_harness.sh`는 로컬 절대경로(`/Users/junhyukpark/...`)를 사용하므로, 다른 환경에서는 모델 경로/로그 경로를 수정해야 합니다.
+
 ## 배포 팁
 
 - 사내 공유용이면 Dockerfile/CI를 추가하세요.

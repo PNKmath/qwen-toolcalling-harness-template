@@ -1,0 +1,264 @@
+{
+  "generated_at": "2026-04-25T12:47:11.717005",
+  "coding": {
+    "4bit": {
+      "completed_runs": 3,
+      "pass_at_1_avg": 1.0,
+      "pass_at_3_avg": 1.0,
+      "attempt_elapsed_avg_sec": 6.36
+    },
+    "6bit": {
+      "completed_runs": 3,
+      "pass_at_1_avg": 1.0,
+      "pass_at_3_avg": 1.0,
+      "attempt_elapsed_avg_sec": 8.196
+    },
+    "8bit": {
+      "completed_runs": 3,
+      "pass_at_1_avg": 1.0,
+      "pass_at_3_avg": 1.0,
+      "attempt_elapsed_avg_sec": 7.291
+    }
+  },
+  "latest_context_runs": {
+    "6bit": [
+      {
+        "mtime": 1777068618.0154133,
+        "file": "/Users/junhyukpark/mlx-model-control-app/.harness/reports/27b-quant-compare/context-6bit-8k16k.json",
+        "bit": "6bit",
+        "size": 8000,
+        "status": 200,
+        "elapsed_sec": 47.347,
+        "usage_prompt_tokens": 8017,
+        "pre_smoke": 200,
+        "post_smoke": 200
+      },
+      {
+        "mtime": 1777068618.0154133,
+        "file": "/Users/junhyukpark/mlx-model-control-app/.harness/reports/27b-quant-compare/context-6bit-8k16k.json",
+        "bit": "6bit",
+        "size": 16000,
+        "status": 200,
+        "elapsed_sec": 100.732,
+        "usage_prompt_tokens": 16017,
+        "pre_smoke": 200,
+        "post_smoke": 200
+      },
+      {
+        "mtime": 1777081966.6565213,
+        "file": "/Users/junhyukpark/mlx-model-control-app/.harness/reports/27b-quant-compare/stability/context-6bit-48k.json",
+        "bit": "6bit",
+        "size": 48000,
+        "status": 200,
+        "elapsed_sec": 184.059,
+        "usage_prompt_tokens": 48017,
+        "pre_smoke": 200,
+        "post_smoke": 200
+      },
+      {
+        "mtime": 1777082224.6900895,
+        "file": "/Users/junhyukpark/mlx-model-control-app/.harness/reports/27b-quant-compare/stability/context-6bit-56k.json",
+        "bit": "6bit",
+        "size": 56000,
+        "status": 200,
+        "elapsed_sec": 247.154,
+        "usage_prompt_tokens": 56017,
+        "pre_smoke": 200,
+        "post_smoke": 200
+      },
+      {
+        "mtime": 1777082499.924438,
+        "file": "/Users/junhyukpark/mlx-model-control-app/.harness/reports/27b-quant-compare/stability/context-6bit-60k.json",
+        "bit": "6bit",
+        "size": 60000,
+        "status": 200,
+        "elapsed_sec": 265.871,
+        "usage_prompt_tokens": 60017,
+        "pre_smoke": 200,
+        "post_smoke": 200
+      },
+      {
+        "mtime": 1777081773.6297903,
+        "file": "/Users/junhyukpark/mlx-model-control-app/.harness/reports/27b-quant-compare/stability/context-6bit-64k.json",
+        "bit": "6bit",
+        "size": 64000,
+        "status": 500,
+        "elapsed_sec": 300.07,
+        "usage_prompt_tokens": null,
+        "pre_smoke": 200,
+        "post_smoke": 200
+      },
+      {
+        "mtime": 1777067367.7425044,
+        "file": "/Users/junhyukpark/mlx-model-control-app/.harness/reports/27b-quant-compare/context-6bit-96k.json",
+        "bit": "6bit",
+        "size": 96000,
+        "status": 500,
+        "elapsed_sec": 300.087,
+        "usage_prompt_tokens": null,
+        "pre_smoke": 200,
+        "post_smoke": -1
+      }
+    ],
+    "8bit": [
+      {
+        "mtime": 1777068727.6191478,
+        "file": "/Users/junhyukpark/mlx-model-control-app/.harness/reports/27b-quant-compare/context-8bit-8k16k.json",
+        "bit": "8bit",
+        "size": 8000,
+        "status": 200,
+        "elapsed_sec": 25.294,
+        "usage_prompt_tokens": 8017,
+        "pre_smoke": 200,
+        "post_smoke": 200
+      },
+      {
+        "mtime": 1777068727.6191478,
+        "file": "/Users/junhyukpark/mlx-model-control-app/.harness/reports/27b-quant-compare/context-8bit-8k16k.json",
+        "bit": "8bit",
+        "size": 16000,
+        "status": 200,
+        "elapsed_sec": 51.411,
+        "usage_prompt_tokens": 16017,
+        "pre_smoke": 200,
+        "post_smoke": 200
+      },
+      {
+        "mtime": 1777069064.9773195,
+        "file": "/Users/junhyukpark/mlx-model-control-app/.harness/reports/27b-quant-compare/context-8bit-96k.json",
+        "bit": "8bit",
+        "size": 96000,
+        "status": 500,
+        "elapsed_sec": 300.107,
+        "usage_prompt_tokens": null,
+        "pre_smoke": 200,
+        "post_smoke": -1
+      }
+    ],
+    "4bit": [
+      {
+        "mtime": 1777068433.5852692,
+        "file": "/Users/junhyukpark/mlx-model-control-app/.harness/reports/27b-quant-compare/context-4bit-8k16k.json",
+        "bit": "4bit",
+        "size": 8000,
+        "status": 200,
+        "elapsed_sec": 94.076,
+        "usage_prompt_tokens": 8017,
+        "pre_smoke": 200,
+        "post_smoke": 200
+      },
+      {
+        "mtime": 1777068433.5852692,
+        "file": "/Users/junhyukpark/mlx-model-control-app/.harness/reports/27b-quant-compare/context-4bit-8k16k.json",
+        "bit": "4bit",
+        "size": 16000,
+        "status": 200,
+        "elapsed_sec": 159.128,
+        "usage_prompt_tokens": 16017,
+        "pre_smoke": 200,
+        "post_smoke": 200
+      },
+      {
+        "mtime": 1777080668.1905715,
+        "file": "/Users/junhyukpark/mlx-model-control-app/.harness/reports/27b-quant-compare/stability/context-4bit-24k.json",
+        "bit": "4bit",
+        "size": 24000,
+        "status": 200,
+        "elapsed_sec": 79.069,
+        "usage_prompt_tokens": 24017,
+        "pre_smoke": 200,
+        "post_smoke": 200
+      },
+      {
+        "mtime": 1777080788.6763268,
+        "file": "/Users/junhyukpark/mlx-model-control-app/.harness/reports/27b-quant-compare/stability/context-4bit-32k.json",
+        "bit": "4bit",
+        "size": 32000,
+        "status": 200,
+        "elapsed_sec": 110.308,
+        "usage_prompt_tokens": 32017,
+        "pre_smoke": 200,
+        "post_smoke": 200
+      },
+      {
+        "mtime": 1777081077.0947502,
+        "file": "/Users/junhyukpark/mlx-model-control-app/.harness/reports/27b-quant-compare/stability/context-4bit-64k.json",
+        "bit": "4bit",
+        "size": 64000,
+        "status": 200,
+        "elapsed_sec": 280.316,
+        "usage_prompt_tokens": 64017,
+        "pre_smoke": 200,
+        "post_smoke": 200
+      },
+      {
+        "mtime": 1777081413.7782285,
+        "file": "/Users/junhyukpark/mlx-model-control-app/.harness/reports/27b-quant-compare/stability/context-4bit-80k.json",
+        "bit": "4bit",
+        "size": 80000,
+        "status": 500,
+        "elapsed_sec": 300.102,
+        "usage_prompt_tokens": null,
+        "pre_smoke": 200,
+        "post_smoke": -1
+      },
+      {
+        "mtime": 1777067001.7955635,
+        "file": "/Users/junhyukpark/mlx-model-control-app/.harness/reports/27b-quant-compare/context-4bit-96k.json",
+        "bit": "4bit",
+        "size": 96000,
+        "status": 500,
+        "elapsed_sec": 300.107,
+        "usage_prompt_tokens": null,
+        "pre_smoke": 200,
+        "post_smoke": -1
+      }
+    ]
+  },
+  "conclusion": {
+    "4bit": {
+      "coding_pass_at_1_avg": 1.0,
+      "coding_pass_at_3_avg": 1.0,
+      "coding_attempt_elapsed_avg_sec": 6.36,
+      "max_success_tested_tokens": 64000,
+      "first_failure_tested_tokens": 80000,
+      "sizes_tested": [
+        8000,
+        16000,
+        24000,
+        32000,
+        64000,
+        80000,
+        96000
+      ]
+    },
+    "6bit": {
+      "coding_pass_at_1_avg": 1.0,
+      "coding_pass_at_3_avg": 1.0,
+      "coding_attempt_elapsed_avg_sec": 8.196,
+      "max_success_tested_tokens": 60000,
+      "first_failure_tested_tokens": 64000,
+      "sizes_tested": [
+        8000,
+        16000,
+        48000,
+        56000,
+        60000,
+        64000,
+        96000
+      ]
+    },
+    "8bit": {
+      "coding_pass_at_1_avg": 1.0,
+      "coding_pass_at_3_avg": 1.0,
+      "coding_attempt_elapsed_avg_sec": 7.291,
+      "max_success_tested_tokens": 16000,
+      "first_failure_tested_tokens": 96000,
+      "sizes_tested": [
+        8000,
+        16000,
+        96000
+      ]
+    }
+  }
+}

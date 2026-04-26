@@ -1,0 +1,120 @@
+{
+  "generated_at": "2026-04-25T07:18:06.617329",
+  "coding": {
+    "4bit": {
+      "completed_runs": 3,
+      "pass_at_1_avg": 1.0,
+      "pass_at_3_avg": 1.0,
+      "attempt_elapsed_avg_sec": 6.36
+    },
+    "6bit": {
+      "completed_runs": 3,
+      "pass_at_1_avg": 1.0,
+      "pass_at_3_avg": 1.0,
+      "attempt_elapsed_avg_sec": 8.196
+    },
+    "8bit": {
+      "completed_runs": 3,
+      "pass_at_1_avg": 1.0,
+      "pass_at_3_avg": 1.0,
+      "attempt_elapsed_avg_sec": 7.291
+    }
+  },
+  "context": {
+    "small_window": {
+      "4bit": {
+        "8000": {
+          "status": 200,
+          "elapsed_sec": 94.076,
+          "usage_prompt_tokens": 8017,
+          "prompt_tps": 85.22
+        },
+        "16000": {
+          "status": 200,
+          "elapsed_sec": 159.128,
+          "usage_prompt_tokens": 16017,
+          "prompt_tps": 100.65
+        },
+        "pre_smoke_status": 200,
+        "post_smoke_status": 200
+      },
+      "6bit": {
+        "8000": {
+          "status": 200,
+          "elapsed_sec": 47.347,
+          "usage_prompt_tokens": 8017,
+          "prompt_tps": 169.32
+        },
+        "16000": {
+          "status": 200,
+          "elapsed_sec": 100.732,
+          "usage_prompt_tokens": 16017,
+          "prompt_tps": 159.01
+        },
+        "pre_smoke_status": 200,
+        "post_smoke_status": 200
+      },
+      "8bit": {
+        "8000": {
+          "status": 200,
+          "elapsed_sec": 25.294,
+          "usage_prompt_tokens": 8017,
+          "prompt_tps": 316.95
+        },
+        "16000": {
+          "status": 200,
+          "elapsed_sec": 51.411,
+          "usage_prompt_tokens": 16017,
+          "prompt_tps": 311.55
+        },
+        "pre_smoke_status": 200,
+        "post_smoke_status": 200
+      }
+    },
+    "stress_96k": {
+      "4bit": {
+        "pre_smoke_status": 200,
+        "status": 500,
+        "elapsed_sec": 300.107,
+        "error_head": "{\"detail\":{\"error\":{\"message\":\"Failed to generate text response: Inference timed out after 300s\",\"type\":\"server_error\",\"param\":null,\"code\":\"500\"}}}",
+        "post_smoke_status": -1,
+        "post_smoke_error": "timed out"
+      },
+      "6bit": {
+        "pre_smoke_status": 200,
+        "status": 500,
+        "elapsed_sec": 300.087,
+        "error_head": "{\"detail\":{\"error\":{\"message\":\"Failed to generate text response: Inference timed out after 300s\",\"type\":\"server_error\",\"param\":null,\"code\":\"500\"}}}",
+        "post_smoke_status": -1,
+        "post_smoke_error": "timed out"
+      },
+      "8bit": {
+        "pre_smoke_status": 200,
+        "status": 500,
+        "elapsed_sec": 300.107,
+        "error_head": "{\"detail\":{\"error\":{\"message\":\"Failed to generate text response: Inference timed out after 300s\",\"type\":\"server_error\",\"param\":null,\"code\":\"500\"}}}",
+        "post_smoke_status": -1,
+        "post_smoke_error": "timed out"
+      }
+    }
+  },
+  "comparison": {
+    "coding_pass_equal": true,
+    "coding_attempt_latency_sec": {
+      "4bit": 6.36,
+      "6bit": 8.196,
+      "8bit": 7.291
+    },
+    "small_context_latency_8k_sec": {
+      "4bit": 94.076,
+      "6bit": 47.347,
+      "8bit": 25.294
+    },
+    "small_context_latency_16k_sec": {
+      "4bit": 159.128,
+      "6bit": 100.732,
+      "8bit": 51.411
+    },
+    "stress_96k_all_timeout_500": true
+  }
+}

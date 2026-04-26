@@ -1,0 +1,29 @@
+[Hermes에서 Qwen3.6-27B 하네스 적용 사용법]
+
+1) 6bit 하네스 서버 기동
+   /Users/junhyukpark/mlx-model-control-app/.harness/scripts/start_qwen27_6bit_harness.sh
+
+2) Hermes 하네스 프로필 사용
+   qwen27-harness chat
+
+3) 단발 테스트
+   qwen27-harness chat -q 'Reply exactly: HARNESS_OK'
+
+4) 툴 하네스 테스트 (기본: preserve_thinking 미전송)
+   /usr/bin/python3 /Users/junhyukpark/mlx-model-control-app/.harness/scripts/tool_harness_qwen36.py \
+     --base-url http://127.0.0.1:8018/v1 \
+     --model Qwen3.6-27B-UD-MLX-6bit \
+     --out /Users/junhyukpark/mlx-model-control-app/.harness/reports/tool-harness-6bit-8018.json
+
+   참고: 현재 mlx-openai-server(v1.7.1 관측)에서는 preserve_thinking 필드를 ignored로 로깅함.
+   필요 시에만 --preserve-thinking 옵션으로 실험적으로 전송.
+
+5) 4bit로 전환하려면 프로필 endpoint/model 변경
+   hermes --profile qwen27-harness config set model.base_url http://127.0.0.1:8016/v1
+   hermes --profile qwen27-harness config set model.default Qwen3.6-27B-UD-MLX-4bit
+   hermes --profile qwen27-harness config set providers.local-mlx.base_url http://127.0.0.1:8016/v1
+
+6) 다시 6bit로 복귀
+   hermes --profile qwen27-harness config set model.base_url http://127.0.0.1:8018/v1
+   hermes --profile qwen27-harness config set model.default Qwen3.6-27B-UD-MLX-6bit
+   hermes --profile qwen27-harness config set providers.local-mlx.base_url http://127.0.0.1:8018/v1

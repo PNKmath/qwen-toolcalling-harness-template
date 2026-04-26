@@ -1,0 +1,41 @@
+{
+  "generated_at": "2026-04-24T20:43:17Z",
+  "settings": {
+    "reasoning_parser": "qwen3",
+    "tool_call_parser": "qwen3_coder",
+    "temperature": 0.6,
+    "presence_penalty": 0.0,
+    "chat_template_kwargs": {
+      "enable_thinking": true,
+      "preserve_thinking": true
+    }
+  },
+  "tool_harness": {
+    "6bit": {
+      "endpoint": "http://127.0.0.1:8018/v1",
+      "pass_rate": 1.0,
+      "avg_elapsed_sec": 21.933
+    },
+    "4bit": {
+      "endpoint": "http://127.0.0.1:8016/v1",
+      "pass_rate": 1.0,
+      "avg_elapsed_sec": 21.157
+    }
+  },
+  "coding_harness": {
+    "6bit": {
+      "endpoint": "http://127.0.0.1:8018/v1",
+      "pass_at_1": 1.0,
+      "pass_at_3": 1.0
+    },
+    "4bit": {
+      "endpoint": "http://127.0.0.1:8016/v1",
+      "pass_at_1": 1.0,
+      "pass_at_3": 1.0
+    }
+  },
+  "recommendation": {
+    "hermes_default_profile": "qwen27-harness (6bit @8018) for stability-focused usage",
+    "alt_profile": "switch base_url/model to 4bit endpoint for speed-sensitive runs"
+  }
+}
