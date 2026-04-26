@@ -4,6 +4,7 @@ from typing import Any
 from openai import OpenAI
 
 from .config import HarnessConfig
+from .toolcall_normalizer import normalize_tool_calls_from_message
 from .tools import TOOLS_SPEC, exec_tool
 
 
@@ -27,23 +28,32 @@ def run_agent(user_prompt: str, cfg: HarnessConfig | None = None) -> dict[str, A
             chat_template_kwargs={"enable_thinking": False, "reasoning_effort": "low"},
         )
         msg = resp.choices[0].message
+        norm = normalize_tool_calls_from_message(msg)
 
+        content = norm["clean_content"] or msg.content or ""
         assistant_message: dict[str, Any] = {
             "role": "assistant",
-            "content": msg.content or "",
+            "content": content,
         }
 
-        if msg.tool_calls:
-            assistant_message["tool_calls"] = [tc.model_dump() for tc in msg.tool_calls]
+        if norm["tool_calls"]:
+            assistant_message["tool_calls"] = [
+                {
+                    "id": tc["id"],
+                    "type": "function",
+                    "function": {"name": tc["name"], "arguments": tc["arguments"]},
+                }
+                for tc in norm["tool_calls"]
+            ]
             messages.append(assistant_message)
 
-            for tc in msg.tool_calls:
-                result = exec_tool(tc.function.name, tc.function.arguments)
+            for tc in norm["tool_calls"]:
+                result = exec_tool(tc["name"], tc["arguments"])
                 messages.append(
                     {
                         "role": "tool",
-                        "tool_call_id": tc.id,
-                        "name": tc.function.name,
+                        "tool_call_id": tc["id"],
+                        "name": tc["name"],
                         "content": result,
                     }
                 )
@@ -53,7 +63,7 @@ def run_agent(user_prompt: str, cfg: HarnessConfig | None = None) -> dict[str, A
         return {
             "ok": True,
             "turns": turn,
-            "final": msg.content,
+            "final": norm["clean_content"] or msg.content,
             "messages": messages,
             "usage": resp.usage.model_dump() if resp.usage else None,
         }
