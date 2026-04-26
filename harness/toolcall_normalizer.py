@@ -179,9 +179,6 @@ def normalize_tool_calls_from_message(msg: Any) -> NormalizeResult:
                 source="fallback",
             )
 
-        # ------------------------------------------------------------------ #
-        # 3. No tool calls
-        # ------------------------------------------------------------------ #
         return NormalizeResult(
             tool_calls=[],
             clean_content=None,
