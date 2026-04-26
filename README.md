@@ -22,6 +22,7 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env
+cp .env.harness.example .env.harness
 ```
 
 `.env` 수정:
@@ -80,8 +81,9 @@ python scripts/tool_harness_qwen36.py \
   - `reports/samples/qwen27-4_6_8bit-coding-context-summary.json`
   - `reports/samples/qwen27-4_6_8bit-interim-summary-2026-04-25.json`
 
-주의:
-- `start_qwen27_*_harness.sh`는 로컬 절대경로(`/Users/junhyukpark/...`)를 사용하므로, 다른 환경에서는 모델 경로/로그 경로를 수정해야 합니다.
+환경 설정:
+- `start_qwen27_*_harness.sh`는 `../.env.harness`를 자동 로드합니다.
+- 다른 환경에서는 `.env.harness.example`를 복사한 뒤 모델 경로/포트/로그 경로만 바꾸면 됩니다.
 
 ## 배포 팁
 
