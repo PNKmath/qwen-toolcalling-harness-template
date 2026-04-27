@@ -80,7 +80,7 @@ def _trigger_start_bg() -> None:
             if not _is_externally_bound():
                 _kill_loopback_dflash()
             env = os.environ.copy()
-            env["QWEN_HOST"] = "0.0.0.0"
+            env["DFLASH_OVERRIDE_HOST"] = "0.0.0.0"  # .env.harness QWEN_HOST보다 우선
             log = open("/tmp/dflash-watchdog.log", "a")
             subprocess.Popen(
                 ["bash", str(START_SCRIPT)],
