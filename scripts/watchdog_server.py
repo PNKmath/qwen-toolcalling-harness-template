@@ -34,20 +34,19 @@ def _is_alive(timeout: int = 3) -> bool:
         return False
 
 
-def _start_and_wait() -> str:
-    """Start dflash (0.0.0.0), wait until healthy. Returns 'started'|'already_running'|'timeout'."""
+def _trigger_start_bg() -> None:
+    """Fire-and-forget: launch dflash in a background thread if not already starting."""
     global _running
-
     with _lock:
-        if _is_alive():
-            return "already_running"
-        if _running:
-            # another thread is already starting — just wait
-            pass
-        else:
-            _running = True
+        if _running or _is_alive():
+            return
+        _running = True
+
+    def _worker():
+        global _running
+        try:
             env = os.environ.copy()
-            env["QWEN_HOST"] = "0.0.0.0"  # expose to Tailscale
+            env["QWEN_HOST"] = "0.0.0.0"
             log = open("/tmp/dflash-watchdog.log", "a")
             subprocess.Popen(
                 ["bash", str(START_SCRIPT)],
@@ -56,17 +55,30 @@ def _start_and_wait() -> str:
                 stderr=log,
                 start_new_session=True,
             )
-            print(f"[watchdog] dflash start triggered", file=sys.stderr)
+            print("[watchdog] dflash start triggered (bg)", file=sys.stderr)
+            for _ in range(START_TIMEOUT):
+                time.sleep(1)
+                if _is_alive():
+                    print("[watchdog] dflash is up", file=sys.stderr)
+                    return
+            print("[watchdog] dflash start timed out", file=sys.stderr)
+        finally:
+            global _running
+            with _lock:
+                _running = False
 
+    threading.Thread(target=_worker, daemon=True).start()
+
+
+def _start_and_wait() -> str:
+    """Start dflash (0.0.0.0), block until healthy. Returns 'started'|'already_running'|'timeout'."""
+    if _is_alive():
+        return "already_running"
+    _trigger_start_bg()  # kicks off if not already running
     for _ in range(START_TIMEOUT):
         time.sleep(1)
         if _is_alive():
-            with _lock:
-                _running = False
             return "started"
-
-    with _lock:
-        _running = False
     return "timeout"
 
 
@@ -85,7 +97,10 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path == "/health":
             alive = _is_alive()
-            self._send_json(200, {"watchdog": "ok", "dflash": alive})
+            if not alive and START_SCRIPT.exists():
+                # 꺼져 있으면 백그라운드 시작 트리거 (응답은 즉시)
+                _trigger_start_bg()
+            self._send_json(200, {"watchdog": "ok", "dflash": alive, "starting": _running})
         else:
             self._send_json(404, {"error": "not found"})
 
