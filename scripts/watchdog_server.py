@@ -17,6 +17,7 @@ from pathlib import Path
 from urllib import request as urlreq
 
 DFLASH_HEALTH = os.getenv("DFLASH_HEALTH_URL", "http://127.0.0.1:8016/health")
+DFLASH_PORT   = int(os.getenv("DFLASH_PORT", "8016"))
 START_SCRIPT   = Path(__file__).parent / "start_dflash_server.sh"
 HOST           = os.getenv("WATCHDOG_HOST", "0.0.0.0")
 PORT           = int(os.getenv("WATCHDOG_PORT", "8017"))
@@ -26,12 +27,42 @@ _lock    = threading.Lock()
 _running = False  # True while we're in the middle of starting dflash
 
 
-def _is_alive(timeout: int = 3) -> bool:
+def _is_externally_bound() -> bool:
+    """lsof로 dflash 포트가 0.0.0.0(*) 에 바인딩됐는지 확인."""
     try:
-        urlreq.urlopen(DFLASH_HEALTH, timeout=timeout)
-        return True
+        result = subprocess.run(
+            ["lsof", "-nP", f"-iTCP:{DFLASH_PORT}", "-sTCP:LISTEN"],
+            capture_output=True, text=True, timeout=3,
+        )
+        return any(f"*:{DFLASH_PORT}" in line for line in result.stdout.splitlines())
     except Exception:
         return False
+
+
+def _kill_loopback_dflash() -> None:
+    """127.0.0.1 전용으로 떠있는 dflash를 종료해 포트를 비운다."""
+    try:
+        result = subprocess.run(
+            ["lsof", "-nP", f"-iTCP:{DFLASH_PORT}", "-sTCP:LISTEN", "-t"],
+            capture_output=True, text=True, timeout=3,
+        )
+        for pid in result.stdout.split():
+            pid = pid.strip()
+            if pid.isdigit():
+                subprocess.run(["kill", pid], capture_output=True)
+                print(f"[watchdog] killed loopback dflash (pid {pid})", file=sys.stderr)
+        time.sleep(2)  # 포트 해제 대기
+    except Exception as e:
+        print(f"[watchdog] kill failed: {e}", file=sys.stderr)
+
+
+def _is_alive(timeout: int = 3) -> bool:
+    """HTTP 응답 AND 외부 바인딩 모두 통과해야 True."""
+    try:
+        urlreq.urlopen(DFLASH_HEALTH, timeout=timeout)
+    except Exception:
+        return False
+    return _is_externally_bound()
 
 
 def _trigger_start_bg() -> None:
@@ -45,6 +76,9 @@ def _trigger_start_bg() -> None:
     def _worker():
         global _running
         try:
+            # 127.0.0.1 전용으로 실행 중이면 먼저 종료
+            if not _is_externally_bound():
+                _kill_loopback_dflash()
             env = os.environ.copy()
             env["QWEN_HOST"] = "0.0.0.0"
             log = open("/tmp/dflash-watchdog.log", "a")
@@ -55,7 +89,7 @@ def _trigger_start_bg() -> None:
                 stderr=log,
                 start_new_session=True,
             )
-            print("[watchdog] dflash start triggered (bg)", file=sys.stderr)
+            print("[watchdog] dflash start triggered (bg, 0.0.0.0)", file=sys.stderr)
             for _ in range(START_TIMEOUT):
                 time.sleep(1)
                 if _is_alive():
